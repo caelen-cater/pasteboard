@@ -26,16 +26,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         curl_close($ch);
 
         $data = json_decode($response, true);
-        $cdnUrl = $data['url']; // The API should return the URL of the uploaded file
+        $cdnUrl = $data['url'];
 
-        // Write the CDN URL to the redirect.txt file in the uploads folder
         $redirectEntry = $randomFileName . '=' . $cdnUrl . "\n";
         file_put_contents($target_dir . 'redirect.txt', $redirectEntry, FILE_APPEND);
 
-        // Delete the file from the uploads folder
         unlink($target_file);
 
-        // Generate and display the redirect URL
         $redirectUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]/file/?id=$randomFileName";
         echo "$redirectUrl";
     } else {
