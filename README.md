@@ -30,13 +30,6 @@ Follow these steps to set up and use Pasteboard:
 
 5. Once the upload is complete, a link to the hosted file on Cirrus CDN will be generated.
 
-## Technologies Used
-
-- HTML
-- CSS
-- JavaScript
-- Cirrus CDN
-
 ## Contributing
 
 If you'd like to contribute to Pasteboard, please follow these guidelines:
