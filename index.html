@@ -6,7 +6,7 @@
         body {
             font-family: Arial, sans-serif;
             background-color: #393D49;
-            background-image: url('https://cdn.cirrus.center/main/icons/noise.png');
+            background-image: url('https://cdn.cirrus.center/static/noise.png');
             color: #333;
             margin: 0;
             padding: 0;
@@ -58,7 +58,7 @@
             text-align: center;
             border-radius: 5px;
             overflow: hidden;
-            background-image: url('https://cdn.cirrus.center/main/icons/noise.png');
+            background-image: url('https://cdn.cirrus.center/static/noise.png');
         }
 
         #linkBox {
@@ -68,7 +68,7 @@
             margin: 10px 0;
             border: none;
             background-color: #333;
-            box-shadow: inset 0px 0px 10px rgba(0,0,0,0.5); /* Inset shadow for "sinking" effect */
+            box-shadow: inset 0px 0px 10px rgba(0,0,0,0.5);
             border-radius: 5px;
             resize: none;
             color: #fff;
@@ -178,7 +178,7 @@
 </head>
 <body>
     <a href="https://github.com/caelen-cater/pasteboard" target="_blank" id="github-link">
-        <img src="https://cdn.cirrus.center/main/icons/github_white.png" alt="GitHub" />
+        <img src="https://cdn.cirrus.center/static/github-mark-white.png" alt="GitHub" />
     </a>
     <div class="container">
         <h1>File Upload</h1>
@@ -193,12 +193,12 @@
     </div>
     <div id="overlay"></div>
     <div id="popup">
-        <img id="closeButton" src="https://cdn.cirrus.center/main/icons/close.png" alt="Close">
+        <img id="closeButton" src="https://cdn.cirrus.center/upload/xSPBI1WzAJc94p7O6RFbendEC" alt="Close">
         <h2 id="linkTitle">Here is your link:</h2>
         <div id="linkContainer">
             <textarea id="linkBox" readonly></textarea>
             <button id="copyButton">
-                <img src="https://cdn.cirrus.center/main/icons/copy.png" alt="Copy">
+                <img src="https://cdn.cirrus.center/upload/hoBSivnJG3gV2xQuXr8jcO5bl" alt="Copy">
             </button>
         </div>
     </div>
@@ -267,10 +267,10 @@
                         document.body.removeChild(dummy);
 
                         var copyIcon = document.querySelector('#copyButton img');
-                        copyIcon.src = 'https://cdn.cirrus.center/main/icons/check.png';
+                        copyIcon.src = 'https://cdn.cirrus.center/upload/7iVEs92yenBKmRDwWUZLHvfph';
 
                         setTimeout(function() {
-                            copyIcon.src = 'https://cdn.cirrus.center/main/icons/copy.png';
+                            copyIcon.src = 'https://cdn.cirrus.center/upload/hoBSivnJG3gV2xQuXr8jcO5bl';
                         }, 2000);
                     });
                 }
