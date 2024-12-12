@@ -15,19 +15,9 @@
             align-items: center;
             height: 100vh;
         }
-        .container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
-        }
 
-        #progressBar {
+        #progressBar, #statusBar {
             display: none;
-            width: 100%;
-            background-color: #f3f3f3;
-            border-radius: 5px;
-            margin-top: 20px;
         }
 
         #overlay {
@@ -132,26 +122,6 @@
             width: 20px;
             height: 20px;
         }
-        #statusBar {
-            position: fixed;
-            bottom: 10px;
-            left: 10px;
-            width: 80%;
-            height: 20px;
-            background-color: #ddd;
-            border-radius: 10px;
-            visibility: hidden;
-        }
-
-        #progressBar {
-            height: 100%;
-            width: 0;
-            background-color: #4CAF50;
-            border-radius: 10px;
-            background-image: linear-gradient(135deg, transparent, transparent 33%, rgba(0,0,0,.1) 33%, rgba(0,0,0,.1) 66%, transparent 66%);
-            background-size: 35px 35px;
-            animation: progress 2s linear infinite;
-        }
 
         #github-link {
             position: fixed;
@@ -174,23 +144,133 @@
                 background-position: 35px 35px;
             }
         }
+
+        :root {
+            --primary: #111926;
+            --white: #fff;
+            --background: #F8F8FF;
+            --gray: #D3D3D3;
+        }
+
+        .dropzone-box {
+            border-radius: 2rem;
+            padding: 2rem;
+            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            max-width: 36rem;
+            width: 100%;
+            background-color: var(--white);
+        }
+
+        .dropzone-box h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .dropzone-area {
+            padding: 1rem;
+            position: relative;
+            margin-top: 1rem;
+            min-height: 16rem;
+            display: flex;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            border: 2px dashed var(--primary);
+            border-radius: 1rem;
+            color: var(--primary);
+            cursor: pointer;
+        }
+
+        .dropzone-area [type="file"] {
+            cursor: pointer;
+            position: absolute;
+            opacity: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+
+        .dropzone-area .file-upload-icon svg {
+            height: 5rem;
+            width: 5rem;
+            margin-bottom: 0.5rem;
+            stroke: var(--primary);
+        }
+
+        .dropzone--over {
+            border-style: solid;
+            background-color: var(--background);
+        }
+
+        .dropzone-actions {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 1.5rem;
+            margin-top: 1.5rem;
+            border-top: 1px solid var(--gray);
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .dropzone-actions button {
+            flex-grow: 1;
+            min-height: 3rem;
+            font-size: 1.2rem;
+        }
+
+        .dropzone-actions button:hover {
+            text-decoration: underline;
+        }
+
+        .dropzone-actions button[type='reset'] {
+            background-color: transparent;
+            border: 1px solid var(--gray);
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+            color: var(--primary);
+            cursor: pointer;
+        }
+
+        .dropzone-actions button[type='submit'] {
+            background-color: var(--primary);
+            border: 1px solid var(--primary);
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+            color: var(--white);
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
     <a href="https://github.com/caelen-cater/pasteboard" target="_blank" id="github-link">
         <img src="https://cirruscdn.com/static/github-mark-white.png" alt="GitHub" />
     </a>
-    <div class="container">
-        <h1>File Upload</h1>
-        <form action="upload.php" method="post" enctype="multipart/form-data">
-            Select file to upload:
-            <input type="file" name="fileToUpload" id="fileToUpload">
-            <input type="submit" value="Upload File" name="submit">
-        </form>
-        <div id="statusBar">
-            <div id="progressBar"></div>
+    <form class="dropzone-box">
+        <h2>Upload and attach files</h2>
+        <p>Attach files to this project</p>
+        <div class="dropzone-area">
+            <div class="file-upload-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                    stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                    <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+                </svg>
+            </div>
+            <p>Click to upload or drag and drop</p>
+            <input type="file" required id="upload-file" name="uploaded-file">
+            <p class="message">No Files Selected</p>
         </div>
-    </div>
+        <div class="dropzone-actions">
+            <button type="reset">Cancel</button>
+            <button id="submit-button" type="submit">Save</button>
+        </div>
+    </form>
     <div id="overlay"></div>
     <div id="popup">
         <img id="closeButton" src="https://cirruscdn.com/upload/xSPBI1WzAJc94p7O6RFbendEC" alt="Close">
@@ -202,82 +282,123 @@
             </button>
         </div>
     </div>
-</body>
-<script>
-    window.onload = function() {
-        document.querySelector('form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            var fileInput = document.querySelector('#fileToUpload');
-            var progressBar = document.querySelector('#progressBar');
-            var formData = new FormData();
-            formData.append('fileToUpload', fileInput.files[0]);
+    <script>
+        window.onload = function() {
+            const dropzoneBox = document.getElementsByClassName("dropzone-box")[0];
+            const inputFiles = document.querySelectorAll(".dropzone-area input[type='file']");
+            const inputElement = inputFiles[0];
+            const dropZoneElement = inputElement.closest(".dropzone-area");
 
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'upload.php', true);
-
-            var fileSizeInMB = fileInput.files[0].size / (1024 * 1024);
-            var totalDurationInSeconds = 30 * fileSizeInMB;
-            var startTime = Date.now();
-
-            var progressInterval = setInterval(function() {
-                var elapsedTimeInSeconds = (Date.now() - startTime) / 1000;
-                var progress = Math.min((elapsedTimeInSeconds / totalDurationInSeconds) * 100, 100);
-                progressBar.style.width = progress + '%';
-
-                if (progress === 100) {
-                    clearInterval(progressInterval);
-                    setTimeout(function() {
-                        progressBar.parentElement.style.visibility = 'hidden';
-                    }, 2000);
-                }
-            }, 100);
-
-            document.getElementById('closeButton').addEventListener('click', function() {
-                document.getElementById('popup').style.display = 'none';
-                document.getElementById('overlay').style.display = 'none';
-            });
-
-            document.addEventListener('keydown', function(event) {
-                if (event.key === 'Escape') {
-                    document.getElementById('popup').style.display = 'none';
-                    document.getElementById('overlay').style.display = 'none';
+            inputElement.addEventListener("change", (e) => {
+                if (inputElement.files.length) {
+                    updateDropzoneFileList(dropZoneElement, inputElement.files[0]);
                 }
             });
 
-            xhr.onload = function() {
-                if (this.status == 200) {
-                    progressBar.style.width = '100%';
-                    setTimeout(function() {
-                        progressBar.parentElement.style.visibility = 'hidden';
-                    }, 2000);
+            dropZoneElement.addEventListener("dragover", (e) => {
+                e.preventDefault();
+                dropZoneElement.classList.add("dropzone--over");
+            });
 
-                    document.getElementById('overlay').style.display = 'block';
-                    var popup = document.getElementById('popup');
-                    popup.style.display = 'block';
-                    document.getElementById('linkBox').value = this.response;
+            ["dragleave", "dragend"].forEach((type) => {
+                dropZoneElement.addEventListener(type, (e) => {
+                    dropZoneElement.classList.remove("dropzone--over");
+                });
+            });
 
-                    document.getElementById('copyButton').addEventListener('click', function() {
-                        var dummy = document.createElement('input'),
-                        text = xhr.response;
+            dropZoneElement.addEventListener("drop", (e) => {
+                e.preventDefault();
+                if (e.dataTransfer.files.length) {
+                    inputElement.files = e.dataTransfer.files;
+                    updateDropzoneFileList(dropZoneElement, e.dataTransfer.files[0]);
+                }
+                dropZoneElement.classList.remove("dropzone--over");
+            });
 
-                        document.body.appendChild(dummy);
-                        dummy.value = text;
-                        dummy.select();
-                        document.execCommand('copy');
-                        document.body.removeChild(dummy);
+            const updateDropzoneFileList = (dropzoneElement, file) => {
+                let dropzoneFileMessage = dropzoneElement.querySelector(".message");
+                dropzoneFileMessage.innerHTML = `${file.name}, ${file.size} bytes`;
+            };
 
-                        var copyIcon = document.querySelector('#copyButton img');
-                        copyIcon.src = 'https://cirruscdn.com/upload/7iVEs92yenBKmRDwWUZLHvfph';
+            dropzoneBox.addEventListener("reset", (e) => {
+                let dropzoneFileMessage = dropZoneElement.querySelector(".message");
+                dropzoneFileMessage.innerHTML = `No Files Selected`;
+            });
 
-                        setTimeout(function() {
-                            copyIcon.src = 'https://cirruscdn.com/upload/hoBSivnJG3gV2xQuXr8jcO5bl';
-                        }, 2000);
-                    });
+            dropzoneBox.addEventListener("submit", (e) => {
+                e.preventDefault();
+                const fileInput = document.getElementById("upload-file");
+                const submitButton = document.getElementById("submit-button");
+                const formData = new FormData();
+                formData.append("fileToUpload", fileInput.files[0]);
+
+                submitButton.disabled = true;
+                submitButton.style.opacity = "0.5";
+                submitButton.style.cursor = "not-allowed";
+
+                const xhr = new XMLHttpRequest();
+                xhr.open("POST", "upload.php", true);
+
+                xhr.onload = function () {
+                    submitButton.disabled = false;
+                    submitButton.style.opacity = "1";
+                    submitButton.style.cursor = "pointer";
+
+                    if (this.status == 200) {
+                        document.getElementById("overlay").style.display = "block";
+                        const popup = document.getElementById("popup");
+                        popup.style.display = "block";
+                        document.getElementById("linkBox").value = this.response;
+                    }
+                };
+
+                xhr.onerror = function() {
+                    submitButton.disabled = false;
+                    submitButton.style.opacity = "1";
+                    submitButton.style.cursor = "pointer";
+                };
+
+                xhr.send(formData);
+            });
+
+            document.getElementById("closeButton").addEventListener("click", function () {
+                document.getElementById("popup").style.display = "none";
+                document.getElementById("overlay").style.display = "none";
+            });
+
+            document.addEventListener("keydown", function (event) {
+                if (event.key === "Escape") {
+                    document.getElementById("popup").style.display = "none";
+                    document.getElementById("overlay").style.display = "none";
+                }
+            });
+
+            const copyToClipboard = async (text) => {
+                try {
+                    await navigator.clipboard.writeText(text);
+                    return true;
+                } catch (err) {
+                    console.error('Failed to copy:', err);
+                    return false;
                 }
             };
 
-            xhr.send(formData);
-        });
-    };
-</script>
+            const copyButton = document.getElementById('copyButton');
+            copyButton.addEventListener('click', async () => {
+                const text = document.getElementById('linkBox').value;
+                const copyIcon = copyButton.querySelector('img');
+                
+                try {
+                    await navigator.clipboard.writeText(text);
+                    copyIcon.src = 'https://cirruscdn.com/upload/7iVEs92yenBKmRDwWUZLHvfph';
+                    setTimeout(() => {
+                        copyIcon.src = 'https://cirruscdn.com/upload/hoBSivnJG3gV2xQuXr8jcO5bl';
+                    }, 2000);
+                } catch (err) {
+                    console.error('Failed to copy:', err);
+                }
+            });
+        };
+    </script>
+</body>
 </html>
