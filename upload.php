@@ -1,7 +1,7 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $apikey = 'YOUR_API_KEY_HERE';
-    $apiUrl = 'https://api.cirrus.center/v2/data/upload/';
+    $apiUrl = 'https://us-east.cirrusapi.com/v2/data/upload/';
 
     $file = $_FILES["fileToUpload"];
     $filePath = $file["tmp_name"];
